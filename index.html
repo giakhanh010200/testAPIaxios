@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        async function axiosTest(name, params) {
+            const response = await axios.get('https://jsonplaceholder.typicode.com/' + name, {
+                params
+            })
+            return response.data
+        }
+        axiosTest('posts', {
+                userId: 1,
+                _limit: 5
+            })
+            .then(function(response) {
+                for (var i = 0; i < response.length; i++) {
+                    $('.posts').append(`<tr class="row${i}"></tr>`);
+                    $(`.row${i}`).append(`<td>${response[i].id}</td>`);
+                    $(`.row${i}`).append(`<td>${response[i].title}</td>`);
+                    $(`.row${i}`).append(`<td>${response[i].body}</td>`);
+                    $(`.row${i}`).append(`<td>${response[i].userId}</td>`);
+                }
+            });
+        axiosTest('photos', {
+                albumId: 2,
+                _limit: 10
+            })
+            .then(function(response) {
+                for (var i = 0; i < response.length; i++) {
+                    $('.photos').append(`<tr class="row-photo${i}"></tr>`);
+                    $(`.row-photo${i}`).append(`<td>${response[i].albumId}</td>`);
+                    $(`.row-photo${i}`).append(`<td>${response[i].title}</td>`);
+                    $(`.row-photo${i}`).append(`<td>${response[i].url}</td>`);
+                    $(`.row-photo${i}`).append(`<td>${response[i].thumbnailUrl}</td>`);
+                }
+            });
+        axiosTest('users', {
+                id: 5
+            })
+            .then(function(response) {
+                var user = response[0];
+                $('.users').append(`<tr class="row-users"></tr>`);
+                $(`.row-users`).append(`<td>${user.id}</td>`);
+                $(`.row-users`).append(`<td>${user.name}</td>`);
+                $(`.row-users`).append(`<td>${user.website}</td>`);
+                $(`.row-users`).append(`<td>${user.phone}</td>`);
+                $(`.row-users`).append(`<td>${user.username}</td>`);
+                $(`.row-users`).append(`<td>${user.address.street}</td>`);
+                $(`.row-users`).append(`<td>${user.address.suite}</td>`);
+                $(`.row-users`).append(`<td>${user.address.city}</td>`);
+                $(`.row-users`).append(`<td>${user.address.zipcode}</td>`);
+            });
+    </script>
+</head>
+
+<body>
+    <h2>Posts</h2>
+    <table class="posts" style="width: 100%; text-align: center">
+        <tr>
+            <th>ID</th>
+            <th>title</th>
+            <th>body</th>
+            <th>Userid</th>
+        </tr>
+    </table>
+    <hr>
+    <h2>Photos</h2>
+    <table class="photos" style="width: 100%; text-align: center">
+        <tr>
+            <th>AlbumID</th>
+            <th>title</th>
+            <th>url</th>
+            <th>thumbnails</th>
+        </tr>
+    </table>
+    <hr>
+    <h2>Users</h2>
+    <table class="users" style="width: 100%; text-align: center">
+        <tr>
+            <th>ID</th>
+            <th>name</th>
+            <th>website</th>
+            <th>phone</th>
+            <th>username</th>
+            <th>address street</th>
+            <th>address suite</th>
+            <th>address city</th>
+            <th>address zipcode</th>
+        </tr>
+    </table>
+</body>
+
+</html>
